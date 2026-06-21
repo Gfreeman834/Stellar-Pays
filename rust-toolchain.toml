@@ -1,0 +1,6 @@
+# Matches the OpenZeppelin stellar-contracts reference toolchain.
+# wasm32v1-none is the Soroban 26 build target.
+[toolchain]
+channel = "stable"
+targets = ["wasm32v1-none"]
+components = ["rustfmt", "clippy", "rust-src"]

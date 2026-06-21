@@ -1,0 +1,1 @@
+{"CAVNQICYSCB3OYESODZUIAP5VMU7JNIHELIX4HMTTGX5BDRY4LW7BINO":{"map":[{"key":{"symbol":"threshold"},"val":{"u32":2}}]},"CCCLVKYNKT3W4H3VAANQ6TP6JPZFB4LLJ4IFC5X5ETPA7I6XPB764LWL":{"map":[{"key":{"symbol":"period_ledgers"},"val":{"u32":17280}},{"key":{"symbol":"spending_limit"},"val":{"i128":"50000000"}}]}}

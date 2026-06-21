@@ -1,0 +1,36 @@
+# PayRoute on Stellar - Soroban contract workspace
+#
+# Dependency versions are pinned to match the OpenZeppelin stellar-contracts
+# reference (soroban-sdk 26.1.0, stellar-accounts 0.7.1). Do not bump without
+# re-verifying against the cloned reference repo.
+[workspace]
+resolver = "2"
+members = [
+    "contracts/corporate_account",
+    "contracts/payment_registry",
+]
+
+[workspace.package]
+edition = "2021"
+license = "MIT"
+version = "0.1.0"
+authors = ["PayRoute"]
+repository = "https://github.com/<org>/payroute"
+
+[workspace.dependencies]
+# Verified against stellar-ref/stellar-contracts/Cargo.toml:56-58
+soroban-sdk = { version = "26.1.0", features = ["experimental_spec_shaking_v2"] }
+# Published crates from OpenZeppelin/stellar-contracts (workspace version 0.7.1)
+stellar-accounts = "0.7.1"
+stellar-contract-utils = "0.7.1"
+ed25519-dalek = "2.1.1"
+
+[profile.release]
+opt-level = "z"
+overflow-checks = true
+debug = 0
+strip = "symbols"
+debug-assertions = false
+panic = "abort"
+codegen-units = 1
+lto = true

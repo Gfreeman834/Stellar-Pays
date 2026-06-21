@@ -1,0 +1,79 @@
+{
+  "network": "testnet",
+  "passphrase": "Test SDF Network ; September 2015",
+  "rpc": "https://soroban-testnet.stellar.org",
+  "deployed": "2026-06-20",
+  "contracts": {
+    "payment_registry": {
+      "contract_id": "CAJPPM6KTENCIKCTUOKEBN3TJZBYRJTRQMCWYTMITOW4EXBXQ3LVCKEP",
+      "wasm_hash": "34138b878659183d9196331fb90306c8534df50075e78d1b8a98b0a380b48bb8",
+      "deploy_tx": "85839c738c82456559569416d94bfec62b2d176e9b842701d25b5d2b51413a6b",
+      "constructor": { "admin": "GCAJGZOAVUFRZX34JUPMXQMJYEKDKGJW5PDK4VGCYF4GI23UFJWGOGMT", "recorder": "GCAJGZOAVUFRZX34JUPMXQMJYEKDKGJW5PDK4VGCYF4GI23UFJWGOGMT" }
+    },
+    "ed25519_verifier": {
+      "contract_id": "CB4E7WQT5F4QIXSGD6KIQQ767PR5YHKPUKRVSOA23A37744LHD4U5LAP",
+      "source": "stellar-contracts/examples/multisig-smart-account/ed25519-verifier"
+    },
+    "threshold_policy": {
+      "contract_id": "CAVNQICYSCB3OYESODZUIAP5VMU7JNIHELIX4HMTTGX5BDRY4LW7BINO",
+      "source": "stellar-contracts/examples/multisig-smart-account/threshold-policy",
+      "params": { "threshold": 2 }
+    },
+    "spending_limit_policy": {
+      "contract_id": "CCCLVKYNKT3W4H3VAANQ6TP6JPZFB4LLJ4IFC5X5ETPA7I6XPB764LWL",
+      "source": "stellar-contracts/examples/multisig-smart-account/spending-limit-policy",
+      "params": { "spending_limit": "50000000", "period_ledgers": 17280 },
+      "note": "requires a CallContract context rule (pins limit to one token); Default rejected with error 3227 OnlyCallContractAllowed"
+    },
+    "corporate_account": {
+      "contract_id": "CDJZRXQOI7YJAITMT5PCPZ3YML33BOLH4BMVRW5AO27C73EOIKLXNXPA",
+      "constructor": {
+        "signers": "3x External(ed25519_verifier, employee pubkey)",
+        "policies": ["threshold_policy", "spending_limit_policy"],
+        "target": "CACRX5HSM6STJ3GH7CCCWUMI636E2ZH4FPWD7UAWJOIOMD3GJRGY4GNF"
+      },
+      "context_rule": "CallContract(USDC) id=0, 2-of-3 multisig + 5 USDC/day limit",
+      "note": "constructor changed to take target: Address -> CallContract(target) rule"
+    }
+  },
+  "tokens": {
+    "usdc_self_issued_sac": "CACRX5HSM6STJ3GH7CCCWUMI636E2ZH4FPWD7UAWJOIOMD3GJRGY4GNF",
+    "usdc_issuer": "GBR7MCSCSXPWQIA2HKIJEVEJG3LF6EDUH75R5HZ6DH7UOCAMS4LP52MM",
+    "decimals": 7,
+    "note": "self-issued testnet USDC (mintable by issuer). circle testnet USDC SAC was CBIELTK6...; repinned to self-issued to control minting."
+  },
+  "keys": {
+    "payroute_admin_facilitator": "GCAJGZOAVUFRZX34JUPMXQMJYEKDKGJW5PDK4VGCYF4GI23UFJWGOGMT",
+    "payroute_merchant": "GCUD75MLIHRQK3PAT3YAA7ZUXUPV5HBITHB3CO2AKXGPCIDWFA6AH43P",
+    "payroute_issuer": "GBR7MCSCSXPWQIA2HKIJEVEJG3LF6EDUH75R5HZ6DH7UOCAMS4LP52MM",
+    "employees": "3 ed25519 signers (see harness employees.json)"
+  },
+  "proofs": {
+    "registry_record_v1_admin": {
+      "tx": "c0fa38b29d3c78f76fd2a057f3633b41e5dc5bd756f3c13f329e00bd4dffd478",
+      "amount": "10000000"
+    },
+    "gasless_multisig_transfer": {
+      "tx": "6c6beb30a532bc18015b40131f0b3e65df3306d0931ad5d3ae35bbc9a3113dc2",
+      "amount": "30000000",
+      "from": "corporate_account",
+      "to": "payroute_merchant",
+      "fee_payer": "payroute_admin_facilitator",
+      "note": "CORP holds no XLM; admin/facilitator paid the fee -> gasless. 2-of-3 ed25519 multisig auth via AuthPayload. under 5 USDC limit."
+    },
+    "registry_record_v2_corp": {
+      "tx": "7894668e884e6973272793d5d3e2d0ed1b11a5ed95622b3d924710afbe061399",
+      "amount": "30000000",
+      "reference": "6c6beb30a532bc18015b40131f0b3e65df3306d0931ad5d3ae35bbc9a3113dc2",
+      "verified": { "payment_count": 2, "total_paid_corp": "30000000" }
+    },
+    "negative_spending_limit": {
+      "amount": "60000000",
+      "rejected_error": "3221 SpendingLimitExceeded (in spending_limit enforce)"
+    },
+    "negative_threshold": {
+      "signers": 1,
+      "rejected_error": "3202 threshold not met (in threshold enforce)"
+    }
+  }
+}

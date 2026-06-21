@@ -1,0 +1,20 @@
+[package]
+name = "payroute-payment-registry"
+edition.workspace = true
+license.workspace = true
+version.workspace = true
+authors.workspace = true
+publish = false
+
+[package.metadata.stellar]
+cargo_inherit = true
+
+[lib]
+crate-type = ["cdylib"]
+doctest = false
+
+[dependencies]
+soroban-sdk = { workspace = true }
+
+[dev-dependencies]
+soroban-sdk = { workspace = true, features = ["testutils"] }
