@@ -1,0 +1,32 @@
+# Rust / Soroban build output
+/target
+**/target
+*.rs.bk
+# Compiled Wasm artifacts
+*.wasm
+
+# Node / frontend (frontend/ also has its own .gitignore)
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+
+# Env & secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secret*.txt
+
+# Stellar / Soroban local keys & identities
+.soroban/
+.stellar/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.log
+.idea/
+.vscode/
