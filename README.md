@@ -83,3 +83,4 @@ stellar contract deploy --wasm <path>.wasm --network testnet --source <key>
 # Stellar-Pay
 # Stellar-Pay
 # Stellar-Pays
+# Stellar-Pays
