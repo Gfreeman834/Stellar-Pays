@@ -81,3 +81,4 @@ stellar contract deploy --wasm <path>.wasm --network testnet --source <key>
 - [ ] FAZ 3: deploy verifier/policy/account to testnet, first gasless multisig SEP-41 transfer, record in registry, real tx hash
 # Stellar-Pay
 # Stellar-Pay
+# Stellar-Pay
