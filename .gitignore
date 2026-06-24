@@ -24,6 +24,10 @@ secret*.txt
 .soroban/
 .stellar/
 
+# Docs / private notes
+documentation.md
+instawards.md
+
 # OS / editor
 .DS_Store
 Thumbs.db
