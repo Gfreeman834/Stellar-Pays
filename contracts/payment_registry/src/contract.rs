@@ -30,6 +30,7 @@ pub enum RegistryError {
     AlreadyInitialized = 1,
     NotInitialized = 2,
     NonPositiveAmount = 3,
+    AlreadyRecorded = 4,
 }
 
 // ################## STORAGE ##################
@@ -39,7 +40,8 @@ pub enum DataKey {
     Admin,
     Recorder,
     Count,
-    TotalPaid(Address), // payer -> cumulative amount recorded
+    TotalPaid(Address),    // payer -> cumulative amount recorded
+    Recorded(BytesN<32>),  // settlement reference -> already recorded (dedup guard)
 }
 
 // ################## EVENTS ##################
@@ -113,6 +115,21 @@ impl PaymentRegistry {
             panic_with_error!(e, RegistryError::NonPositiveAmount);
         }
         Self::recorder(e).require_auth();
+
+        // Dedup guard: a settlement `reference` (tx hash) must be recorded at
+        // most once. Without this, a recorder retry would double-count the
+        // payment in `Count` and `TotalPaid`, silently inflating the audit
+        // trail. We persist the reference and reject any repeat.
+        let recorded_key = DataKey::Recorded(reference.clone());
+        if e.storage().persistent().has(&recorded_key) {
+            panic_with_error!(e, RegistryError::AlreadyRecorded);
+        }
+        e.storage().persistent().set(&recorded_key, &true);
+        e.storage().persistent().extend_ttl(
+            &recorded_key,
+            REGISTRY_TTL_THRESHOLD,
+            REGISTRY_EXTEND_AMOUNT,
+        );
 
         let count: u32 = e.storage().instance().get(&DataKey::Count).unwrap_or(0);
         e.storage().instance().set(&DataKey::Count, &(count + 1));
