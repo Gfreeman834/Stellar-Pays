@@ -16,9 +16,6 @@ const VERIFIER = A.verifier;
 const AMOUNT = BigInt(process.env.AMOUNT || '30000000');
 
 const admin = Keypair.fromSecret(process.env.ADMIN_SECRET);
-const _unused = (() => null); /*
-  process.env.HOME + '/.config/stellar/identity/payroute-admin.toml','utf8'
-*/
 
 const addrScVal = (a) => new Address(a).toScVal();
 const i128ScVal = (v) => nativeToScVal(v, { type: 'i128' });

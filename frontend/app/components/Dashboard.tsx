@@ -37,7 +37,7 @@ export default function Dashboard() {
     try {
       setError(null);
       const res = await fetch("/api/registry", { cache: "no-store" });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      if (!res.ok) throw new Error(`the registry service is unavailable (HTTP ${res.status})`);
       setData(await res.json());
     } catch (e) {
       setError(e instanceof Error ? e.message : String(e));
@@ -76,7 +76,8 @@ export default function Dashboard() {
 
       {error && (
         <Card className="border-bad/40 p-4 text-sm text-red-300">
-          Failed to read registry: {error}
+          We couldn’t load the live registry data just now — {error}. This page
+          retries automatically every few seconds, or use Refresh.
         </Card>
       )}
 
