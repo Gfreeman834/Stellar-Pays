@@ -6,11 +6,36 @@ recorded off-path in the payment_registry.
 
 ## Files
 - `addresses.json`  all deployed contract IDs + keys (testnet)
-- `gen-args.mjs`     generates 3 employee ed25519 signers + signers.json
+- `gen-args.mjs`     generates 3 employee ed25519 signers + `employees.json` + `signers.json`
 - `gen-policies.mjs` generates policies.json (tagged ScVal Map<Address,Val>)
 - `transfer.mjs`     builds + signs the multisig AuthPayload, fee-paid by the
                      facilitator (admin) so the corporate account stays gasless
-- `employees.json`   SECRET KEYS of the 3 demo signers (testnet only)
+- `employees.json`   SECRET KEYS of the 3 demo signers (testnet only, **git-ignored**)
+- `signers.json`     `Vec<Signer::External>` for the account constructor (**git-ignored**)
+- `employees.example.json`, `signers.example.json`  committed shape templates
+
+## Generating local keys
+
+`employees.json` and `signers.json` are **not committed** (they hold secret
+seeds). Generate them locally before running the harness:
+
+```
+cd harness
+npm install
+node gen-args.mjs        # writes employees.json, signers.json, policies.json
+```
+
+This mints three fresh random testnet ed25519 keypairs each run. The signers
+only sign the auth digest, so they do not need funding; only the admin /
+facilitator key (the tx source + fee payer) must be funded via friendbot:
+
+```
+stellar keys generate payroute-admin --network testnet --fund
+```
+
+> ⚠️ **SECURITY:** the seeds these scripts produce are throwaway **testnet**
+> keys. Any seed that was ever committed to git is **compromised** — never reuse
+> it. **Never use any of these seeds, or this harness, on Stellar mainnet.**
 
 ## Run a transfer
 ```

@@ -1,0 +1,17 @@
+[
+  {
+    "public": "G...EMPLOYEE_1_PUBLIC_KEY",
+    "secret": "S...EMPLOYEE_1_SECRET_SEED",
+    "hex": "<32-byte ed25519 public key, hex>"
+  },
+  {
+    "public": "G...EMPLOYEE_2_PUBLIC_KEY",
+    "secret": "S...EMPLOYEE_2_SECRET_SEED",
+    "hex": "<32-byte ed25519 public key, hex>"
+  },
+  {
+    "public": "G...EMPLOYEE_3_PUBLIC_KEY",
+    "secret": "S...EMPLOYEE_3_SECRET_SEED",
+    "hex": "<32-byte ed25519 public key, hex>"
+  }
+]

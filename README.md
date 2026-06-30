@@ -75,6 +75,15 @@ cargo build --target wasm32v1-none --release --package payroute-payment-registry
 stellar contract deploy --wasm <path>.wasm --network testnet --source <key>
 ```
 
+## Security note on keys
+
+The `harness/` scripts use **testnet-only** ed25519 keypairs. The real
+`harness/employees.json` / `harness/signers.json` are git-ignored and generated
+locally (`node harness/gen-args.mjs`); only the committed `*.example.json`
+templates show their shape. Any seed that ever landed in git history is
+compromised and must be regenerated. **Never use these seeds, or this harness,
+on Stellar mainnet.**
+
 ## Status
 
 - [x] FAZ 2: workspace + `corporate_account` wiring + `payment_registry` skeleton + registry tests
