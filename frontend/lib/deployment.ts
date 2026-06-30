@@ -3,9 +3,9 @@ export const DEPLOYMENT = {
   network: "testnet",
   passphrase: "Test SDF Network ; September 2015",
   rpc: "https://soroban-testnet.stellar.org",
-  deployed: "2026-06-20",
+  deployed: "2026-06-30",
   contracts: {
-    payment_registry: "CAJPPM6KTENCIKCTUOKEBN3TJZBYRJTRQMCWYTMITOW4EXBXQ3LVCKEP",
+    payment_registry: "CCYAFSGC6VJXGB7PEUOTE3MA2RFEVVNOPWPCZWTIIXHDA2KBC2BFKILZ",
     corporate_account: "CDJZRXQOI7YJAITMT5PCPZ3YML33BOLH4BMVRW5AO27C73EOIKLXNXPA",
     ed25519_verifier: "CB4E7WQT5F4QIXSGD6KIQQ767PR5YHKPUKRVSOA23A37744LHD4U5LAP",
     threshold_policy: "CAVNQICYSCB3OYESODZUIAP5VMU7JNIHELIX4HMTTGX5BDRY4LW7BINO",
@@ -35,7 +35,7 @@ export interface RecordedPayment {
 export const RECORDED_PAYMENTS: RecordedPayment[] = [
   {
     // registry_record_v2_corp — the headline gasless 2-of-3 multisig payment.
-    txHash: "7894668e884e6973272793d5d3e2d0ed1b11a5ed95622b3d924710afbe061399",
+    txHash: "c7700769e026b0ec91eff6226ad0799cb8fe6c5c9044ac30ed191a4e50124d54",
     payer: "CDJZRXQOI7YJAITMT5PCPZ3YML33BOLH4BMVRW5AO27C73EOIKLXNXPA",
     payerKind: "contract",
     merchant: "GCUD75MLIHRQK3PAT3YAA7ZUXUPV5HBITHB3CO2AKXGPCIDWFA6AH43P",
@@ -46,13 +46,13 @@ export const RECORDED_PAYMENTS: RecordedPayment[] = [
   },
   {
     // registry_record_v1_admin — first recorder smoke-test record.
-    txHash: "c0fa38b29d3c78f76fd2a057f3633b41e5dc5bd756f3c13f329e00bd4dffd478",
+    txHash: "f110747d066fd255507dbf90d21621fcf64cbbfdcf3cdf0508ff19b88f606a82",
     payer: "GCAJGZOAVUFRZX34JUPMXQMJYEKDKGJW5PDK4VGCYF4GI23UFJWGOGMT",
     payerKind: "account",
     merchant: "GCUD75MLIHRQK3PAT3YAA7ZUXUPV5HBITHB3CO2AKXGPCIDWFA6AH43P",
     token: "CACRX5HSM6STJ3GH7CCCWUMI636E2ZH4FPWD7UAWJOIOMD3GJRGY4GNF",
     amount: "10000000",
-    reference: "",
+    reference: "8f71478a5bf1fc55abe761f2fd0580d5ba620c3a5cba25fb85eb72f634577f95",
   },
 ];
 

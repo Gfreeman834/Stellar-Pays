@@ -125,7 +125,7 @@ RPC `https://soroban-testnet.stellar.org`, deployed **2026-06-20**.
 
 | Contract | ID |
 |---|---|
-| `payment_registry` | `CAJPPM6KTENCIKCTUOKEBN3TJZBYRJTRQMCWYTMITOW4EXBXQ3LVCKEP` |
+| `payment_registry` | `CCYAFSGC6VJXGB7PEUOTE3MA2RFEVVNOPWPCZWTIIXHDA2KBC2BFKILZ` |
 | `corporate_account` | `CDJZRXQOI7YJAITMT5PCPZ3YML33BOLH4BMVRW5AO27C73EOIKLXNXPA` |
 | ed25519 verifier | `CB4E7WQT5F4QIXSGD6KIQQ767PR5YHKPUKRVSOA23A37744LHD4U5LAP` |
 | threshold policy (2-of-3) | `CAVNQICYSCB3OYESODZUIAP5VMU7JNIHELIX4HMTTGX5BDRY4LW7BINO` |
@@ -140,8 +140,11 @@ RPC `https://soroban-testnet.stellar.org`, deployed **2026-06-20**.
   admin/facilitator** (the corporate account holds no XLM → gasless), 2-of-3
   ed25519 multisig auth via the OZ `AuthPayload`, under the 5 USDC limit.
 - **Registry record of that payment:**
-  `7894668e884e6973272793d5d3e2d0ed1b11a5ed95622b3d924710afbe061399`
+  `c7700769e026b0ec91eff6226ad0799cb8fe6c5c9044ac30ed191a4e50124d54`
   — verified `payment_count = 2`, `total_paid(corp) = 3 USDC`.
+- **Negative — duplicate record:** re-recording the same settlement reference is
+  rejected with `4 AlreadyRecorded` (dedup guard); `payment_count` stayed `2` and
+  `total_paid(corp)` stayed 3 USDC, so a recorder retry cannot inflate the trail.
 - **Negative — over limit:** 6 USDC transfer rejected with
   `3221 SpendingLimitExceeded`.
 - **Negative — under threshold:** 1 signer rejected with `3202 threshold not met`.

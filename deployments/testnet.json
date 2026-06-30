@@ -2,13 +2,15 @@
   "network": "testnet",
   "passphrase": "Test SDF Network ; September 2015",
   "rpc": "https://soroban-testnet.stellar.org",
-  "deployed": "2026-06-20",
+  "deployed": "2026-06-30",
   "contracts": {
     "payment_registry": {
-      "contract_id": "CAJPPM6KTENCIKCTUOKEBN3TJZBYRJTRQMCWYTMITOW4EXBXQ3LVCKEP",
-      "wasm_hash": "34138b878659183d9196331fb90306c8534df50075e78d1b8a98b0a380b48bb8",
-      "deploy_tx": "85839c738c82456559569416d94bfec62b2d176e9b842701d25b5d2b51413a6b",
-      "constructor": { "admin": "GCAJGZOAVUFRZX34JUPMXQMJYEKDKGJW5PDK4VGCYF4GI23UFJWGOGMT", "recorder": "GCAJGZOAVUFRZX34JUPMXQMJYEKDKGJW5PDK4VGCYF4GI23UFJWGOGMT" }
+      "contract_id": "CCYAFSGC6VJXGB7PEUOTE3MA2RFEVVNOPWPCZWTIIXHDA2KBC2BFKILZ",
+      "wasm_hash": "e713ce7488c75d68241fc8e1d05a0eb05dcba65084f0a7ba52c461a855256ebf",
+      "upload_tx": "bf639af33c4d1bb487ca1c7efd3cdcc7fc49e558da54bf79f227c059dc288b40",
+      "deploy_tx": "8f71478a5bf1fc55abe761f2fd0580d5ba620c3a5cba25fb85eb72f634577f95",
+      "constructor": { "admin": "GAHFUOFII4TUGN2ESDTR52NWXQBQIH4GJALBLOFBOIALFL3DKY6JJ3XP", "recorder": "GAHFUOFII4TUGN2ESDTR52NWXQBQIH4GJALBLOFBOIALFL3DKY6JJ3XP" },
+      "note": "redeployed 2026-06-30 with record_payment dedup fix (Recorded(reference) guard, AlreadyRecorded=4). Previous id CAJPPM6KTENCIKCTUOKEBN3TJZBYRJTRQMCWYTMITOW4EXBXQ3LVCKEP is superseded."
     },
     "ed25519_verifier": {
       "contract_id": "CB4E7WQT5F4QIXSGD6KIQQ767PR5YHKPUKRVSOA23A37744LHD4U5LAP",
@@ -50,8 +52,9 @@
   },
   "proofs": {
     "registry_record_v1_admin": {
-      "tx": "c0fa38b29d3c78f76fd2a057f3633b41e5dc5bd756f3c13f329e00bd4dffd478",
-      "amount": "10000000"
+      "tx": "f110747d066fd255507dbf90d21621fcf64cbbfdcf3cdf0508ff19b88f606a82",
+      "amount": "10000000",
+      "reference": "8f71478a5bf1fc55abe761f2fd0580d5ba620c3a5cba25fb85eb72f634577f95"
     },
     "gasless_multisig_transfer": {
       "tx": "6c6beb30a532bc18015b40131f0b3e65df3306d0931ad5d3ae35bbc9a3113dc2",
@@ -62,10 +65,14 @@
       "note": "CORP holds no XLM; admin/facilitator paid the fee -> gasless. 2-of-3 ed25519 multisig auth via AuthPayload. under 5 USDC limit."
     },
     "registry_record_v2_corp": {
-      "tx": "7894668e884e6973272793d5d3e2d0ed1b11a5ed95622b3d924710afbe061399",
+      "tx": "c7700769e026b0ec91eff6226ad0799cb8fe6c5c9044ac30ed191a4e50124d54",
       "amount": "30000000",
       "reference": "6c6beb30a532bc18015b40131f0b3e65df3306d0931ad5d3ae35bbc9a3113dc2",
       "verified": { "payment_count": 2, "total_paid_corp": "30000000" }
+    },
+    "registry_dedup_rejected": {
+      "reference": "6c6beb30a532bc18015b40131f0b3e65df3306d0931ad5d3ae35bbc9a3113dc2",
+      "rejected_error": "4 AlreadyRecorded (re-recording the v2 reference is rejected; payment_count stayed 2, total_paid_corp stayed 30000000)"
     },
     "negative_spending_limit": {
       "amount": "60000000",
